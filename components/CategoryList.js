@@ -2,16 +2,20 @@ import React from 'react'
 import {
     View,
     Text,
-    Image, StyleSheet,
+    Image, StyleSheet, TouchableOpacity
 } from 'react-native'
 import Splash from '../assets/humidity.png'
 
 export default function CategoryList(props) {
-    const { category } = props
-    return <View style={styles.container}>
-        <Text style={styles.title}>{category.name}</Text>
-        <Image style={styles.categoryImage} source={Splash} />
-    </View>
+    const { category, onPress } = props
+    return (
+        <TouchableOpacity onPress={onPress}>
+            <View style={styles.container}>
+                <Text style={styles.title}>{category.name}</Text>
+                <Image style={styles.categoryImage} source={Splash} />
+            </View>
+        </TouchableOpacity>
+    );
 }
 
 const styles = StyleSheet.create({
