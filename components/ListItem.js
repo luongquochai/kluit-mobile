@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, Platform, StyleSheet, Button, Alert } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
+import LineCharts from './LineCharts';
 
 export default function ListItem(props) {
     const [date, setDate] = useState(new Date(1598051730000));
@@ -37,7 +38,6 @@ export default function ListItem(props) {
                 for (var key in resp.data) {
                     console.log(resp.data[key].time);
                 }
-
                 setData(resp.data);
             })
             .catch(err => {
@@ -74,6 +74,7 @@ export default function ListItem(props) {
                     title='Press here!'
                 >
                 </Button>
+                <LineCharts />
             </View>
         </View>
     );

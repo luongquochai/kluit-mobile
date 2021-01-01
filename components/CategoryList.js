@@ -12,7 +12,7 @@ export default function CategoryList(props) {
         <TouchableOpacity onPress={onPress}>
             <View style={styles.container}>
                 <Text style={styles.title}>{category.name}</Text>
-                <Image style={styles.categoryImage} source={Splash} />
+                <Image style={styles.categoryImage} source={category.source} />
             </View>
         </TouchableOpacity>
     );
