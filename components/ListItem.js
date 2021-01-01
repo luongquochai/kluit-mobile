@@ -1,84 +1,80 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { View, Text, Platform, StyleSheet, Button, Alert } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 import LineCharts from './LineCharts';
+import LineChartsMonth from './LineChartsMonth';
+import LineChartsYear from './LineChartsYear';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
 
-export default function ListItem(props) {
-    const [date, setDate] = useState(new Date(1598051730000));
-    const [mode, setMode] = useState('date');
-    const [show, setShow] = useState(true);
-    const [data, setData] = useState();
+export default class ListItem extends React.Component {
+    constructor(props) {
+        super(props);
 
-    const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate || date;
-        setShow(Platform.OS === 'ios');
-        setDate(currentDate);
-        console.log(currentDate);
-    };
-
-    const showMode = (currentMode) => {
-        setShow(true);
-        setMode(currentMode);
-    };
-
-    const showDatepicker = () => {
-        showMode('date');
-    };
-
-    const showTimepicker = () => {
-        showMode('time');
-    };
-    const URL = 'https://www.kluit-staging.tk:8000/statistics/humidity_date';
-
-    const fetchData = async () => {
-        fetch('https://www.kluit-staging.tk:8000/statistics/humidity_date')
-            .then(response => response.json())
-            .then(resp => {
-                for (var key in resp.data) {
-                    console.log(resp.data[key].time);
-                }
-                setData(resp.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
+        this.state = {
+            date: new Date(),
+            mode: 'date',
+            show: true,
+            data: null,
+            val: null,
+            label: null,
+        }
     }
 
-    return (
-        <View>
-            {/* <View>
+    onChange(event, selectedDate) {
+        const currentDate = selectedDate || date;
+        show = (Platform.OS === 'ios');
+        date = currentDate;
+        this.setState({
+            show: show,
+            date: date,
+        })
+    }
+    showMode(currentMode) {
+        this.setState({
+            show: true,
+            mode: currentMode
+        })
+    }
+    render() {
+
+        return (
+            <View>
+
+                {/* <View>
                 <Button onPress={showDatepicker} title="Show date picker!" />
             </View> */}
-            <View style={styles.container}>
-                <View style={styles.calendar} >
-                    <Text style={styles.title}>
-                        Calendar:
+                <View style={styles.container}>
+                    <View style={styles.calendar} >
+                        <Text style={styles.title}>
+                            Calendar:
                 </Text>
-                    {show && (
-                        <DateTimePicker
-                            testID="dateTimePicker"
-                            value={date}
-                            mode={mode}
-                            is24Hour={true}
-                            display="default"
-                            onChange={onChange}
-                            style={styles.cal}
-                        />
-                    )}
+                        {this.state.show && (
+                            <DateTimePicker
+                                testID="dateTimePicker"
+                                value={this.state.date}
+                                mode={this.state.mode}
+                                is24Hour={true}
+                                display="default"
+                                onChange={this.onChange.bind(this)}
+                                style={styles.cal}
+                            />
+                        )}
+                    </View>
                 </View>
+                <ScrollView>
+                    <View>
+                        <Button onPress={this.fetchData} title="Fetch Data!" />
+                    </View>
+                    <LineCharts />
+                    <LineChartsMonth />
+                    <LineChartsYear />
+                </ScrollView>
             </View>
-            <View>
-                <Button
-                    onPress={fetchData}
-                    title='Press here!'
-                >
-                </Button>
-                <LineCharts />
-            </View>
-        </View>
-    );
-};
+        );
+    }
+}
+
 
 const styles = StyleSheet.create({
     container: {
