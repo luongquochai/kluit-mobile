@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Text, Platform, StyleSheet, Button, Alert } from 'react-native';
+import { View, Text, Platform, StyleSheet, Button, RefreshControl } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import axios from 'axios';
 import LineCharts from './LineCharts';
 import LineChartsMonth from './LineChartsMonth';
 import LineChartsYear from './LineChartsYear';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import { createDrawerNavigator } from 'react-navigation';
 
 export default class ListItem extends React.Component {
     constructor(props) {
@@ -13,42 +14,40 @@ export default class ListItem extends React.Component {
 
         this.state = {
             date: new Date(),
+            month: new Date(),
+            year: new Date(),
             mode: 'date',
             show: true,
-            data: null,
-            val: null,
-            label: null,
+            pickedDate: null,
+            apiKey: this.props.typeData,
+            refreshing: false,
         }
+        //this.fetchData = this.fetchData.bind(this);
+        this.changeDate = this.changeDate.bind(this);
     }
-
-    onChange(event, selectedDate) {
+    async changeDate(event, selectedDate) {
         const currentDate = selectedDate || date;
         show = (Platform.OS === 'ios');
-        date = currentDate;
+        const datepicker = new Date(currentDate).toLocaleDateString();
+        const monthpicker = new Date(datepicker).getMonth() + 1;
+        // console.log(monthpicker);
         this.setState({
             show: show,
-            date: date,
+            date: currentDate,
         })
-    }
-    showMode(currentMode) {
-        this.setState({
-            show: true,
-            mode: currentMode
-        })
-    }
-    render() {
 
+    }
+
+    render() {
+        let typeData = this.props.typeData;
+        const { navigation } = this.props
         return (
             <View>
-
-                {/* <View>
-                <Button onPress={showDatepicker} title="Show date picker!" />
-            </View> */}
-                <View style={styles.container}>
+                <View style={styles.containerPicker}>
                     <View style={styles.calendar} >
                         <Text style={styles.title}>
                             Calendar:
-                </Text>
+                        </Text>
                         {this.state.show && (
                             <DateTimePicker
                                 testID="dateTimePicker"
@@ -56,19 +55,28 @@ export default class ListItem extends React.Component {
                                 mode={this.state.mode}
                                 is24Hour={true}
                                 display="default"
-                                onChange={this.onChange.bind(this)}
+                                onChange={this.changeDate}
                                 style={styles.cal}
                             />
                         )}
                     </View>
                 </View>
                 <ScrollView>
-                    <View>
+                    {/* <View>
                         <Button onPress={this.fetchData} title="Fetch Data!" />
-                    </View>
-                    <LineCharts />
-                    <LineChartsMonth />
-                    <LineChartsYear />
+                    </View> */}
+                    <LineCharts
+                        typeData={typeData}
+                        newDate={this.state.date}
+                    />
+                    <LineChartsMonth
+                        typeData={typeData}
+                        newDate={this.state.date}
+                    />
+                    <LineChartsYear
+                        typeData={typeData}
+                        newDate={this.state.date}
+                    />
                 </ScrollView>
             </View>
         );

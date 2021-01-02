@@ -11,10 +11,10 @@ export default class Categories extends React.Component {
         super(props);
         this.state = {
             categories: [
-                { id: 1, name: 'Độ Ẩm', source: require('../assets/humidity.png') },
-                { id: 2, name: 'Ánh Sáng', source: require('../assets/brightness.png') },
-                { id: 3, name: 'pH', source: require('../assets/pH.png') },
-                { id: 4, name: 'Amoni', source: require('../assets/amoni.png') },
+                { id: 1, name: 'Độ Ẩm', key: 'humidity', source: require('../assets/humidity.png') },
+                { id: 2, name: 'Ánh Sáng', key: 'brightness', source: require('../assets/brightness.png') },
+                { id: 3, name: 'pH', key: 'ph', source: require('../assets/pH.png') },
+                { id: 4, name: 'Amoni', key: 'amoni', source: require('../assets/amoni.png') },
             ]
         }
     }
@@ -29,7 +29,8 @@ export default class Categories extends React.Component {
                         <CategoryList
                             category={item}
                             onPress={() => navigation.navigate('Category', {
-                                categoryName: item.name
+                                categoryName: item.name,
+                                keyName: item.key
                             })}
                             image={item.source}
                         />

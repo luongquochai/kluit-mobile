@@ -11,9 +11,12 @@ export default class Category extends React.Component {
     };
 
     render() {
+        //console.log(`${JSON.stringify(this.props.navigation)}`);
+        let keyName = this.props.navigation.state.params.keyName;
+        console.log(keyName);
         return (
             <View>
-                <ListItem />
+                <ListItem typeData={keyName} />
                 <StatusBar style="auto" />
             </View>
         );
