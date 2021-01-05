@@ -70,7 +70,7 @@ export default class LineCharts extends Component {
     }
     async componentDidMount() {
         //let a = aw    ait AsyncStorage.getItem('datepicked');
-        console.log(this.state.newDate);
+        //console.log(this.state.newDate);
         //this.props.changeDate(this.state.newDate);
         if (this.state.newDate) {
             await this.fetchData();
@@ -139,6 +139,7 @@ export default class LineCharts extends Component {
                         yAxisInterval={1} // optional, defaults to 1
                         fromZero={1}
                         segments={3}
+                        verticalLabelRotation={280}
                         chartConfig={{
                             backgroundColor: "#e26a00",
                             backgroundGradientFrom: "#0531F5",
