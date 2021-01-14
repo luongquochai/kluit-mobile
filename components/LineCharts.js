@@ -7,7 +7,7 @@ import {
     Text, RefreshControl,
     View, Dimensions
 } from 'react-native';
-
+import { Svg, Text as TextSVG } from 'react-native-svg';
 import {
     LineChart,
 } from 'react-native-chart-kit'
@@ -151,12 +151,20 @@ export default class LineCharts extends Component {
                                 borderRadius: 8,
                             },
                             strokeWidth: "2",
+                            propsForBackgroundLines: {
+                                strokeWidth: 0
+                            },
+                            propsForVerticalLabels: {
+                                fontSize: 2,
+
+                            },
                             propsForDots: {
-                                r: "4",
+                                r: "0",
                                 strokeWidth: "1",
                                 stroke: "#ffa726"
                             }
                         }}
+
                         bezier
                         style={styles.container}
                     />
