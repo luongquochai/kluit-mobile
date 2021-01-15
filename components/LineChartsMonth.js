@@ -79,7 +79,7 @@ export default class LineCharts extends Component {
 
 
     }
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         this.setState({
             newDate: nextProps.newDate,
         })

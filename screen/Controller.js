@@ -5,6 +5,10 @@ import GradientButton from 'react-native-gradient-buttons';
 import SnackBar from 'rn-snackbar-component'
 import Icon from 'react-native-vector-icons/Ionicons';
 
+const baseURL = 'https://www.kluit-staging.tk:8000';
+//var socketConfig = { path: '/socket' };
+
+
 export default class Controller extends React.Component {
     static navigationOptions = {
         title: 'Controller',
@@ -13,19 +17,25 @@ export default class Controller extends React.Component {
     };
     constructor(props) {
         super(props);
-        this.state = {
 
+        this.state = {
+            msg: 'null'
         }
     }
 
     componentDidMount() {
         this.socket = io('https://www.kluit-staging.tk:8000/');
+        //this.socket = new SocketIO(`${baseURL}`, '/');
+        // this.socket = io(`${baseURL}/`);
+
     }
     callback_humidity() {
         alert('Updating...!');
-        this.socket.emit('callback_humidity', {
+        this.setState({
             msg: 'get_h_0a'
         })
+        //this.socket = io(`${baseURL}/`);
+        this.socket.emit('callback_data', this.state.msg)
         this.setState({
             callback: false,
             open: true,
