@@ -22,7 +22,7 @@ export default class Controller extends React.Component {
         //this.socket = io('https://www.kluit-staging.tk:8000/');
     }
     callback_humidity() {
-        alert('Updating...!');
+        alert('Update successfully!');
         this.socket.emit('callback_humidity', {
             msg: 'get_h_0a'
         })
@@ -49,7 +49,7 @@ export default class Controller extends React.Component {
     }
 
     callback_brightness() {
-        alert('Updating...!');
+        alert('Update successfully!');
         this.socket.emit('callback_brightness', {
             msg: 'get_l_0a'
         })

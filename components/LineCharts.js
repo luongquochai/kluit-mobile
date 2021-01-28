@@ -155,11 +155,11 @@ export default class LineCharts extends Component {
                                 strokeWidth: 0
                             },
                             propsForVerticalLabels: {
-                                fontSize: 2,
+                                fontSize: 8,
 
                             },
                             propsForDots: {
-                                r: "0",
+                                r: "4",
                                 strokeWidth: "1",
                                 stroke: "#ffa726"
                             }
